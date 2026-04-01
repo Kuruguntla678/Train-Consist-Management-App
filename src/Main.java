@@ -1,19 +1,22 @@
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 class Bogie {
     String name;
     int capacity;
+    String type; // Passenger or Goods
 
-    Bogie(String name, int capacity) {
+    Bogie(String name, int capacity, String type) {
         this.name = name;
         this.capacity = capacity;
+        this.type = type;
     }
 
     @Override
     public String toString() {
-        return name + " -> Capacity: " + capacity;
+        return name + " (" + capacity + ")";
     }
 }
 
@@ -24,19 +27,22 @@ public class TrainApp {
         System.out.println("=== Train Consist Management App ===");
 
         List<Bogie> bogies = new ArrayList<>();
-        bogies.add(new Bogie("Sleeper", 72));
-        bogies.add(new Bogie("AC Chair", 54));
-        bogies.add(new Bogie("First Class", 24));
-        bogies.add(new Bogie("Super Luxury", 80));
+        bogies.add(new Bogie("Sleeper", 72, "Passenger"));
+        bogies.add(new Bogie("AC Chair", 54, "Passenger"));
+        bogies.add(new Bogie("First Class", 24, "Passenger"));
+        bogies.add(new Bogie("Rectangular", 100, "Goods"));
+        bogies.add(new Bogie("Cylindrical", 120, "Goods"));
 
-        System.out.println("All Bogies:");
-        bogies.forEach(System.out::println);
+        Map<String, List<Bogie>> groupedBogies = bogies.stream()
+                .collect(Collectors.groupingBy(b -> b.type));
 
-        List<Bogie> filteredBogies = bogies.stream()
-                .filter(b -> b.capacity > 60)
-                .collect(Collectors.toList());
+        System.out.println("Grouped Bogies by Type:");
 
-        System.out.println("\nFiltered Bogies (Capacity > 60):");
-        filteredBogies.forEach(System.out::println);
+        for (Map.Entry<String, List<Bogie>> entry : groupedBogies.entrySet()) {
+            System.out.println("\n" + entry.getKey() + " Bogies:");
+            for (Bogie b : entry.getValue()) {
+                System.out.println(b);
+            }
+        }
     }
 }
