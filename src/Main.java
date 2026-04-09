@@ -1,11 +1,30 @@
-public class BogieSearchApp {
+import java.util.Arrays;
 
-    public static boolean linearSearch(String[] bogieIds, String key) {
+public class BogieBinarySearchApp {
 
-        for (int i = 0; i < bogieIds.length; i++) {
+    public static boolean binarySearch(String[] bogieIds, String key) {
 
-            if (bogieIds[i].equals(key)) {
+        if (bogieIds.length == 0) {
+            return false;
+        }
+
+        Arrays.sort(bogieIds);
+
+        int low = 0;
+        int high = bogieIds.length - 1;
+
+        while (low <= high) {
+
+            int mid = (low + high) / 2;
+
+            int result = key.compareTo(bogieIds[mid]);
+
+            if (result == 0) {
                 return true;
+            } else if (result > 0) {
+                low = mid + 1;
+            } else {
+                high = mid - 1;
             }
         }
 
@@ -18,7 +37,7 @@ public class BogieSearchApp {
 
         String searchKey = "BG309";
 
-        boolean found = linearSearch(bogieIds, searchKey);
+        boolean found = binarySearch(bogieIds, searchKey);
 
         if (found) {
             System.out.println("Bogie ID " + searchKey + " found.");
@@ -26,20 +45,27 @@ public class BogieSearchApp {
             System.out.println("Bogie ID " + searchKey + " not found.");
         }
 
-
         System.out.println("\nTest Cases:");
 
         System.out.println("Search BG999: " +
-                linearSearch(bogieIds, "BG999"));
+                binarySearch(bogieIds, "BG999"));
 
         System.out.println("Search BG101: " +
-                linearSearch(bogieIds, "BG101"));
+                binarySearch(bogieIds, "BG101"));
 
         System.out.println("Search BG550: " +
-                linearSearch(bogieIds, "BG550"));
+                binarySearch(bogieIds, "BG550"));
 
         String[] single = {"BG101"};
-        System.out.println("Single Element Search BG101: " +
-                linearSearch(single, "BG101"));
+        System.out.println("Single Element Search: " +
+                binarySearch(single, "BG101"));
+
+        String[] empty = {};
+        System.out.println("Empty Array Search: " +
+                binarySearch(empty, "BG101"));
+
+        String[] unsorted = {"BG309", "BG101", "BG550", "BG205", "BG412"};
+        System.out.println("Unsorted Input Search BG205: " +
+                binarySearch(unsorted, "BG205"));
     }
 }
