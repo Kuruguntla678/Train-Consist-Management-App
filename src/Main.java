@@ -1,30 +1,14 @@
-import java.util.Arrays;
+public class BogieSearchWithValidation {
 
-public class BogieBinarySearchApp {
+    public static boolean searchBogie(String[] bogieIds, String key) {
 
-    public static boolean binarySearch(String[] bogieIds, String key) {
-
-        if (bogieIds.length == 0) {
-            return false;
+        if (bogieIds == null || bogieIds.length == 0) {
+            throw new IllegalStateException("No bogies available. Cannot perform search.");
         }
 
-        Arrays.sort(bogieIds);
-
-        int low = 0;
-        int high = bogieIds.length - 1;
-
-        while (low <= high) {
-
-            int mid = (low + high) / 2;
-
-            int result = key.compareTo(bogieIds[mid]);
-
-            if (result == 0) {
+        for (String id : bogieIds) {
+            if (id.equals(key)) {
                 return true;
-            } else if (result > 0) {
-                low = mid + 1;
-            } else {
-                high = mid - 1;
             }
         }
 
@@ -33,39 +17,23 @@ public class BogieBinarySearchApp {
 
     public static void main(String[] args) {
 
-        String[] bogieIds = {"BG101", "BG205", "BG309", "BG412", "BG550"};
-
-        String searchKey = "BG309";
-
-        boolean found = binarySearch(bogieIds, searchKey);
-
-        if (found) {
-            System.out.println("Bogie ID " + searchKey + " found.");
-        } else {
-            System.out.println("Bogie ID " + searchKey + " not found.");
+        try {
+            String[] empty = {};
+            searchBogie(empty, "BG101");
+        } catch (IllegalStateException e) {
+            System.out.println("Error: " + e.getMessage());
         }
 
-        System.out.println("\nTest Cases:");
+        String[] bogies = {"BG101", "BG205", "BG309"};
+
+        System.out.println("\nSearch BG205: " +
+                searchBogie(bogies, "BG205")); // true
 
         System.out.println("Search BG999: " +
-                binarySearch(bogieIds, "BG999"));
-
-        System.out.println("Search BG101: " +
-                binarySearch(bogieIds, "BG101"));
-
-        System.out.println("Search BG550: " +
-                binarySearch(bogieIds, "BG550"));
+                searchBogie(bogies, "BG999")); // false
 
         String[] single = {"BG101"};
         System.out.println("Single Element Search: " +
-                binarySearch(single, "BG101"));
-
-        String[] empty = {};
-        System.out.println("Empty Array Search: " +
-                binarySearch(empty, "BG101"));
-
-        String[] unsorted = {"BG309", "BG101", "BG550", "BG205", "BG412"};
-        System.out.println("Unsorted Input Search BG205: " +
-                binarySearch(unsorted, "BG205"));
+                searchBogie(single, "BG101")); // true
     }
 }
