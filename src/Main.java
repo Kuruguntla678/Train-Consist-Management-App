@@ -1,34 +1,45 @@
-import java.util.Arrays;
+public class BogieSearchApp {
 
-public class BogieNameSorter {
+    public static boolean linearSearch(String[] bogieIds, String key) {
+
+        for (int i = 0; i < bogieIds.length; i++) {
+
+            if (bogieIds[i].equals(key)) {
+                return true;
+            }
+        }
+
+        return false;
+    }
 
     public static void main(String[] args) {
 
-        String[] bogieNames = {
-                "Sleeper", "AC Chair", "First Class", "General", "Luxury"
-        };
+        String[] bogieIds = {"BG101", "BG205", "BG309", "BG412", "BG550"};
 
-        System.out.println("Before Sorting:");
-        System.out.println(Arrays.toString(bogieNames));
-        Arrays.sort(bogieNames);
+        String searchKey = "BG309";
 
-        System.out.println("After Sorting:");
-        System.out.println(Arrays.toString(bogieNames));
+        boolean found = linearSearch(bogieIds, searchKey);
 
-        String[] test1 = {"Luxury", "General", "Sleeper", "AC Chair"};
-        Arrays.sort(test1);
-        System.out.println("Unsorted Input Sorted: " + Arrays.toString(test1));
+        if (found) {
+            System.out.println("Bogie ID " + searchKey + " found.");
+        } else {
+            System.out.println("Bogie ID " + searchKey + " not found.");
+        }
 
-        String[] test2 = {"AC Chair", "First Class", "General"};
-        Arrays.sort(test2);
-        System.out.println("Already Sorted: " + Arrays.toString(test2));
 
-        String[] test3 = {"Sleeper", "AC Chair", "Sleeper", "General"};
-        Arrays.sort(test3);
-        System.out.println("Duplicates Sorted: " + Arrays.toString(test3));
+        System.out.println("\nTest Cases:");
 
-        String[] test4 = {"Sleeper"};
-        Arrays.sort(test4);
-        System.out.println("Single Element: " + Arrays.toString(test4));
+        System.out.println("Search BG999: " +
+                linearSearch(bogieIds, "BG999"));
+
+        System.out.println("Search BG101: " +
+                linearSearch(bogieIds, "BG101"));
+
+        System.out.println("Search BG550: " +
+                linearSearch(bogieIds, "BG550"));
+
+        String[] single = {"BG101"};
+        System.out.println("Single Element Search BG101: " +
+                linearSearch(single, "BG101"));
     }
 }
