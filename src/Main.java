@@ -1,82 +1,34 @@
-<<<<<<< HEAD
-class CargoSafetyException extends RuntimeException {
-    public CargoSafetyException(String message) {
-        super(message);
-    }
-}
+import java.util.Arrays;
 
-class GoodsBogie {
-    String shape;
-    String cargo;
-
-    public GoodsBogie(String shape) {
-        this.shape = shape;
-    }
-
-    public void assignCargo(String cargoType) {
-        try {
-            // Validation
-            if (shape.equalsIgnoreCase("Rectangular") &&
-                    cargoType.equalsIgnoreCase("Petroleum")) {
-
-                throw new CargoSafetyException(
-                        "Unsafe! Cannot assign Petroleum to Rectangular Bogie."
-                );
-            }
-
-            this.cargo = cargoType;
-            System.out.println("Cargo '" + cargoType + "' assigned to " + shape + " bogie.");
-
-        } catch (CargoSafetyException e) {
-            System.out.println("Error: " + e.getMessage());
-
-        } finally {
-            System.out.println("Assignment attempt completed.\n");
-        }
-    }
-
-    public void display() {
-        System.out.println("Bogie Shape: " + shape +
-                ", Cargo: " + (cargo == null ? "None" : cargo));
-    }
-}
-
-// Main Class
-public class TrainConsistApp {
-    public static void main(String[] args) {
-
-        GoodsBogie b1 = new GoodsBogie("Cylindrical");
-        GoodsBogie b2 = new GoodsBogie("Rectangular");
-
-        b1.assignCargo("Petroleum");
-
-        b2.assignCargo("Petroleum");
-
-        b2.assignCargo("Coal");
-
-        b1.display();
-        b2.display();
-
-        System.out.println("\nProgram continues successfully after handling exceptions.");
-=======
-import java.util.ArrayList;
-import java.util.List;
-
-public class TrainApp {
+public class BogieNameSorter {
 
     public static void main(String[] args) {
 
-        // Welcome message
-        System.out.println("=== Train Consist Management App ===");
+        String[] bogieNames = {
+                "Sleeper", "AC Chair", "First Class", "General", "Luxury"
+        };
 
-        // Initialize empty list for bogies
-        List<String> trainConsist = new ArrayList<>();
+        System.out.println("Before Sorting:");
+        System.out.println(Arrays.toString(bogieNames));
+        Arrays.sort(bogieNames);
 
-        // Display initial bogie count
-        System.out.println("Train consist initialized.");
-        System.out.println("Initial number of bogies: " + trainConsist.size());
+        System.out.println("After Sorting:");
+        System.out.println(Arrays.toString(bogieNames));
 
-        // Program continues...
->>>>>>> fadf2c3c623b9e895b97215b490086724d77bc51
+        String[] test1 = {"Luxury", "General", "Sleeper", "AC Chair"};
+        Arrays.sort(test1);
+        System.out.println("Unsorted Input Sorted: " + Arrays.toString(test1));
+
+        String[] test2 = {"AC Chair", "First Class", "General"};
+        Arrays.sort(test2);
+        System.out.println("Already Sorted: " + Arrays.toString(test2));
+
+        String[] test3 = {"Sleeper", "AC Chair", "Sleeper", "General"};
+        Arrays.sort(test3);
+        System.out.println("Duplicates Sorted: " + Arrays.toString(test3));
+
+        String[] test4 = {"Sleeper"};
+        Arrays.sort(test4);
+        System.out.println("Single Element: " + Arrays.toString(test4));
     }
 }
