@@ -1,82 +1,54 @@
-<<<<<<< HEAD
-class CargoSafetyException extends RuntimeException {
-    public CargoSafetyException(String message) {
-        super(message);
-    }
-}
+class PassengerBogieSorter {
 
-class GoodsBogie {
-    String shape;
-    String cargo;
+    public static void bubbleSort(int[] capacities) {
+        int n = capacities.length;
 
-    public GoodsBogie(String shape) {
-        this.shape = shape;
-    }
+        for (int i = 0; i < n - 1; i++) {
 
-    public void assignCargo(String cargoType) {
-        try {
-            // Validation
-            if (shape.equalsIgnoreCase("Rectangular") &&
-                    cargoType.equalsIgnoreCase("Petroleum")) {
+            for (int j = 0; j < n - i - 1; j++) {
 
-                throw new CargoSafetyException(
-                        "Unsafe! Cannot assign Petroleum to Rectangular Bogie."
-                );
+                if (capacities[j] > capacities[j + 1]) {
+
+                    int temp = capacities[j];
+                    capacities[j] = capacities[j + 1];
+                    capacities[j + 1] = temp;
+                }
             }
-
-            this.cargo = cargoType;
-            System.out.println("Cargo '" + cargoType + "' assigned to " + shape + " bogie.");
-
-        } catch (CargoSafetyException e) {
-            System.out.println("Error: " + e.getMessage());
-
-        } finally {
-            System.out.println("Assignment attempt completed.\n");
         }
     }
 
-    public void display() {
-        System.out.println("Bogie Shape: " + shape +
-                ", Cargo: " + (cargo == null ? "None" : cargo));
+    public static void display(int[] arr) {
+        for (int val : arr) {
+            System.out.print(val + " ");
+        }
+        System.out.println();
     }
-}
-
-// Main Class
-public class TrainConsistApp {
-    public static void main(String[] args) {
-
-        GoodsBogie b1 = new GoodsBogie("Cylindrical");
-        GoodsBogie b2 = new GoodsBogie("Rectangular");
-
-        b1.assignCargo("Petroleum");
-
-        b2.assignCargo("Petroleum");
-
-        b2.assignCargo("Coal");
-
-        b1.display();
-        b2.display();
-
-        System.out.println("\nProgram continues successfully after handling exceptions.");
-=======
-import java.util.ArrayList;
-import java.util.List;
-
-public class TrainApp {
 
     public static void main(String[] args) {
 
-        // Welcome message
-        System.out.println("=== Train Consist Management App ===");
+        int[] capacities = {72, 56, 24, 70, 60};
 
-        // Initialize empty list for bogies
-        List<String> trainConsist = new ArrayList<>();
+        System.out.println("Before Sorting:");
+        display(capacities);
 
-        // Display initial bogie count
-        System.out.println("Train consist initialized.");
-        System.out.println("Initial number of bogies: " + trainConsist.size());
+        bubbleSort(capacities);
 
-        // Program continues...
->>>>>>> fadf2c3c623b9e895b97215b490086724d77bc51
+        System.out.println("After Sorting:");
+        display(capacities);
+
+        int[] duplicate = {72, 56, 56, 24};
+        bubbleSort(duplicate);
+        System.out.print("Duplicate Sorted: ");
+        display(duplicate);
+
+        int[] single = {50};
+        bubbleSort(single);
+        System.out.print("Single Element: ");
+        display(single);
+
+        int[] equal = {40, 40, 40};
+        bubbleSort(equal);
+        System.out.print("All Equal: ");
+        display(equal);
     }
 }
